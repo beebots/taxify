@@ -8,67 +8,63 @@
 
 namespace ZayconTaxify;
 
-class TaxifyBaseClass {
+class TaxifyBaseClass
+{
 
-	/** @var ExtendedProperty[] $extended_properties */
-	protected $extended_properties;
+    /** @var ExtendedProperty[] $extended_properties */
+    protected $extended_properties;
 
-	/**
-	 * @param array|NULL $data
-	 */
-	public function setExtendedProperties( array $data=NULL )
-	{
-		if ( ! empty( $data ) )
-		{
-			$this->extended_properties = array();
+    /**
+     * @param array|NULL $data
+     */
+    public function setExtendedProperties(array $data = null)
+    {
+        if (!empty($data)) {
+            $this->extended_properties = [];
 
-			foreach ($data as $key => $val)
-			{
-				$this->extended_properties[] = new ExtendedProperty( $key, $val );
-			}
-		}
-	}
+            foreach ($data as $key => $val) {
+                $this->extended_properties[] = new ExtendedProperty($key, $val);
+            }
+        }
+    }
 
-	/**
-	 * @return ExtendedProperty[]
-	 */
-	public function getExtendedProperties()
-	{
-		return $this->extended_properties;
-	}
+    /**
+     * @return ExtendedProperty[]
+     */
+    public function getExtendedProperties()
+    {
+        return $this->extended_properties;
+    }
 
-	/**
-	 *
-	 */
-	public function clearExtendedProperties()
-	{
-		$this->extended_properties = NULL;
-	}
+    /**
+     *
+     */
+    public function clearExtendedProperties()
+    {
+        $this->extended_properties = null;
+    }
 
-	/**
-	 * @param $key
-	 * @param $val
-	 */
-	public function addExtendedProperty( $key, $val )
-	{
-		if ( $this->extended_properties === NULL )
-		{
-			$this->extended_properties = array();
-		}
-		$this->extended_properties[] = new ExtendedProperty( $key, $val );
-	}
+    /**
+     * @param $key
+     * @param $val
+     */
+    public function addExtendedProperty($key, $val)
+    {
+        if ($this->extended_properties === null) {
+            $this->extended_properties = [];
+        }
+        $this->extended_properties[] = new ExtendedProperty($key, $val);
+    }
 
-	/**
-	 * @param $index
-	 */
-	public function removeExtendedProperty( $index )
-	{
-		if ( $this->extended_properties !== NULL )
-		{
-			if ( array_key_exists( $index, $this->extended_properties ) )
-			{
-				unset( $this->extended_properties[ $index ] );
-			}
-		}
-	}
+    /**
+     * @param $index
+     */
+    public function removeExtendedProperty($index)
+    {
+        if ($this->extended_properties !== null) {
+            if (array_key_exists($index, $this->extended_properties)) {
+                unset($this->extended_properties[$index]);
+            }
+        }
+    }
 }

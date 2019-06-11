@@ -8,10 +8,12 @@
 
 namespace ZayconTaxify;
 
-class Exception extends \Exception {
+class Exception extends \Exception
+{
 
-	function __construct( $message, $code=0, \Exception $previous=NULL) {
+    function __construct($message, $code = 0, \Exception $previous = null)
+    {
 
-		parent::__construct( $message, $code, $previous );
-	}
+        parent::__construct($message, $code, $previous);
+    }
 }

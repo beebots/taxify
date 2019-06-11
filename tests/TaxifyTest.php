@@ -2,108 +2,109 @@
 
 class TaxifyTest extends PHPUnit_Framework_TestCase
 {
-	public function testIsDev()
-	{
-		$taxify = new \ZayconTaxify\Taxify( NULL, \ZayconTaxify\Taxify::ENV_DEV );
-		$this->assertTrue( $taxify->isDev() );
-	}
 
-	public function testIsProd()
-	{
-		$taxify = new \ZayconTaxify\Taxify( NULL, \ZayconTaxify\Taxify::ENV_PROD );
-		$this->assertTrue( $taxify->isProd() );
-	}
+    public function testIsDev()
+    {
+        $taxify = new \ZayconTaxify\Taxify(null, \ZayconTaxify\Taxify::ENV_DEV);
+        $this->assertTrue($taxify->isDev());
+    }
 
-	public function testGetEnvironment()
-	{
-		$taxify = new \ZayconTaxify\Taxify( NULL, \ZayconTaxify\Taxify::ENV_PROD );
-		$this->assertEquals( \ZayconTaxify\Taxify::ENV_PROD, $taxify->getEnvironment() );
-	}
+    public function testIsProd()
+    {
+        $taxify = new \ZayconTaxify\Taxify(null, \ZayconTaxify\Taxify::ENV_PROD);
+        $this->assertTrue($taxify->isProd());
+    }
 
-	/**
-	 * @depends testIsProd
-	 */
-	public function testSetEnvironment()
-	{
-		$taxify = new \ZayconTaxify\Taxify();
-		$taxify->setEnvironment( \ZayconTaxify\Taxify::ENV_PROD );
-		$this->assertTrue( $taxify->isProd() );
-	}
+    public function testGetEnvironment()
+    {
+        $taxify = new \ZayconTaxify\Taxify(null, \ZayconTaxify\Taxify::ENV_PROD);
+        $this->assertEquals(\ZayconTaxify\Taxify::ENV_PROD, $taxify->getEnvironment());
+    }
 
-	public function testGetApiKey()
-	{
-		$api_key = "api-0123456789-xoxoxo";
-		$taxify = new \ZayconTaxify\Taxify( $api_key );
-		$this->assertEquals( $api_key, $taxify->getApiKey() );
-	}
+    /**
+     * @depends testIsProd
+     */
+    public function testSetEnvironment()
+    {
+        $taxify = new \ZayconTaxify\Taxify();
+        $taxify->setEnvironment(\ZayconTaxify\Taxify::ENV_PROD);
+        $this->assertTrue($taxify->isProd());
+    }
 
-	/**
-	 * @depends testGetApiKey
-	 */
-	public function testSetApiKey()
-	{
-		$api_key = "api-0123456789-xoxoxo";
-		$taxify = new \ZayconTaxify\Taxify();
-		$taxify->setApiKey( $api_key );
+    public function testGetApiKey()
+    {
+        $api_key = "api-0123456789-xoxoxo";
+        $taxify  = new \ZayconTaxify\Taxify($api_key);
+        $this->assertEquals($api_key, $taxify->getApiKey());
+    }
 
-		$this->assertEquals( $api_key, $taxify->getApiKey() );
-	}
+    /**
+     * @depends testGetApiKey
+     */
+    public function testSetApiKey()
+    {
+        $api_key = "api-0123456789-xoxoxo";
+        $taxify  = new \ZayconTaxify\Taxify();
+        $taxify->setApiKey($api_key);
 
-	public function testGetDevUrl()
-	{
-		$dev_url = \ZayconTaxify\Taxify::DEV_URL;
-		$taxify = new \ZayconTaxify\Taxify( NULL, \ZayconTaxify\Taxify::ENV_DEV );
-		$this->assertEquals( $dev_url, $taxify->getUrl() );
-	}
+        $this->assertEquals($api_key, $taxify->getApiKey());
+    }
 
-	public function testGetProdUrl()
-	{
-		$prod_url = \ZayconTaxify\Taxify::PROD_URL;
-		$taxify = new \ZayconTaxify\Taxify( NULL, \ZayconTaxify\Taxify::ENV_PROD );
-		$this->assertEquals( $prod_url, $taxify->getUrl() );
-	}
+    public function testGetDevUrl()
+    {
+        $dev_url = \ZayconTaxify\Taxify::DEV_URL;
+        $taxify  = new \ZayconTaxify\Taxify(null, \ZayconTaxify\Taxify::ENV_DEV);
+        $this->assertEquals($dev_url, $taxify->getUrl());
+    }
 
-	public function testIsDebugMode()
-	{
-		$taxify = new \ZayconTaxify\Taxify();
-		$this->assertFalse( $taxify->isDebugMode() );
-	}
+    public function testGetProdUrl()
+    {
+        $prod_url = \ZayconTaxify\Taxify::PROD_URL;
+        $taxify   = new \ZayconTaxify\Taxify(null, \ZayconTaxify\Taxify::ENV_PROD);
+        $this->assertEquals($prod_url, $taxify->getUrl());
+    }
 
-	/**
-	 * @depends testIsDebugMode
-	 */
-	public function testSetDebugMode()
-	{
-		$taxify = new \ZayconTaxify\Taxify(NULL, NULL, FALSE);
-		$taxify->setDebugMode( TRUE );
-		$this->assertTrue( $taxify->isDebugMode() );
-	}
+    public function testIsDebugMode()
+    {
+        $taxify = new \ZayconTaxify\Taxify();
+        $this->assertFalse($taxify->isDebugMode());
+    }
 
-	public function testToString()
-	{
-		$taxify = new \ZayconTaxify\Taxify();
+    /**
+     * @depends testIsDebugMode
+     */
+    public function testSetDebugMode()
+    {
+        $taxify = new \ZayconTaxify\Taxify(null, null, false);
+        $taxify->setDebugMode(true);
+        $this->assertTrue($taxify->isDebugMode());
+    }
 
-		$null_string = NULL;
-		$not_null_string = "Hey! I'm a string!";
+    public function testToString()
+    {
+        $taxify = new \ZayconTaxify\Taxify();
 
-		$this->assertEquals(NULL, $taxify->toString($null_string));
-		$this->assertEquals($not_null_string, $taxify->toString($not_null_string));
-	}
+        $null_string     = null;
+        $not_null_string = "Hey! I'm a string!";
 
-	/**
-	 * @depends testSetDebugMode
-	 */
-	public function testPrintDebugInfo()
-	{
-		$taxify = new \ZayconTaxify\Taxify( NULL, NULL, TRUE );
+        $this->assertEquals(null, $taxify->toString($null_string));
+        $this->assertEquals($not_null_string, $taxify->toString($not_null_string));
+    }
 
-		$title = "Title";
-		$data = array();
+    /**
+     * @depends testSetDebugMode
+     */
+    public function testPrintDebugInfo()
+    {
+        $taxify = new \ZayconTaxify\Taxify(null, null, true);
 
-		$this->assertTrue( $taxify->printDebugInfo( $title, $data ) );
+        $title = "Title";
+        $data  = [];
 
-		$taxify->setDebugMode(FALSE);
+        $this->assertTrue($taxify->printDebugInfo($title, $data));
 
-		$this->assertFalse( $taxify->printDebugInfo( $title, $data ) );
-	}
+        $taxify->setDebugMode(false);
+
+        $this->assertFalse($taxify->printDebugInfo($title, $data));
+    }
 }

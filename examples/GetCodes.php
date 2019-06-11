@@ -6,20 +6,17 @@
  * Time: 2:13 PM
  */
 
-require_once( 'config.php' );
+require_once('config.php');
 
-try
-{
-	/* initialize taxify */
-	$taxify = new ZayconTaxify\Taxify( API_KEY, ZayconTaxify\Taxify::ENV_DEV, TRUE );
+try {
+    /* initialize taxify */
+    $taxify = new ZayconTaxify\Taxify(API_KEY, ZayconTaxify\Taxify::ENV_DEV, true);
 
-	/* account */
-	$account = new ZayconTaxify\Account( $taxify );
+    /* account */
+    $account = new ZayconTaxify\Account($taxify);
 
-	$code_types = $account->getCodes();
-	var_dump( $code_types );
-}
-catch ( ZayconTaxify\Exception $e )
-{
-	var_dump( $e );
+    $code_types = $account->getCodes();
+    var_dump($code_types);
+} catch (ZayconTaxify\Exception $e) {
+    var_dump($e);
 }

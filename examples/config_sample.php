@@ -8,9 +8,9 @@
  * Add your API Key and rename this file to config.php
  */
 
-error_reporting( E_ALL );
-ini_set( 'display_errors', 1 );
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-require_once( dirname( __DIR__ ) . '/src/taxify_required.php' );
+require_once(dirname(__DIR__) . '/src/taxify_required.php');
 
-define( 'API_KEY', '[YOUR_API_KEY]');
+define('API_KEY', '[YOUR_API_KEY]');

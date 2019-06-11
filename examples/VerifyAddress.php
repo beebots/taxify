@@ -6,25 +6,22 @@
  * Time: 2:13 PM
  */
 
-require_once( 'config.php' );
+require_once('config.php');
 
-try
-{
-	/* initialize taxify */
-	$taxify = new ZayconTaxify\Taxify( API_KEY, ZayconTaxify\Taxify::ENV_DEV, TRUE );
+try {
+    /* initialize taxify */
+    $taxify = new ZayconTaxify\Taxify(API_KEY, ZayconTaxify\Taxify::ENV_DEV, true);
 
-	/* address */
-	$address = new ZayconTaxify\Address( $taxify );
-	$address
-		->setStreet1( '16201 E Indiana St' ) /* should change St to Ave */
-		->setCity( 'Spokane Valley' )
-		->setState( 'WA' )
-		->setPostalCode( '99216' )
-		->verifyAddress();
+    /* address */
+    $address = new ZayconTaxify\Address($taxify);
+    $address
+        ->setStreet1('16201 E Indiana St')/* should change St to Ave */
+        ->setCity('Spokane Valley')
+        ->setState('WA')
+        ->setPostalCode('99216')
+        ->verifyAddress();
 
-	var_dump( $address );
-}
-catch ( ZayconTaxify\Exception $e )
-{
-	var_dump( $e );
+    var_dump($address);
+} catch (ZayconTaxify\Exception $e) {
+    var_dump($e);
 }
