@@ -8,9 +8,18 @@
 Connect your website with the [Taxify](https://www.taxify.co) API
 
 ## Table of Contents
+
+* [Notes](#notes)
 * [Installation](#install)
 * [Documentation](#documentation)
 * [About](#about)
+
+## <a name="notes"></a> Notes
+
+This fork of Taxify has been updated to work with PHP 7, fixing notices, etc. It
+is currently an equivalent replacement for the original package.
+
+If breaking changes are introduced, they will be introduced in a v2 release.
 
 ## <a name="install"></a>Installation
 
