@@ -6,13 +6,13 @@
  * Time: 10:56 AM
  */
 
-namespace ZayconTaxify;
+namespace rk\Taxify;
 
 class Communicator
 {
 
-    const ERROR_COMMUNICATION = 'Communication error with the server';
-    const ERROR_CALL          = 'There was a problem with the server call';
+    public const ERROR_COMMUNICATION = 'Communication error with the server';
+    public const ERROR_CALL          = 'There was a problem with the server call';
 
     /** @var Taxify $taxify */
     private $taxify;
@@ -20,15 +20,14 @@ class Communicator
     /**
      * @param Taxify $taxify
      */
-    function __construct(Taxify &$taxify)
+    public function __construct(Taxify $taxify)
     {
-
         $this->taxify = $taxify;
     }
 
     /**
-     * @param $service
-     * @param $data
+     * @param string $service
+     * @param array  $data
      *
      * @return mixed
      * @throws Exception
@@ -66,19 +65,19 @@ class Communicator
         ]);
 
         $result    = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $http_code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
         $this->taxify->printDebugInfo('Result', $result);
 
-        if ($http_code != 200) {
-            throw new Exception (self::ERROR_COMMUNICATION . ' (' . $this->taxify->getUrl() . $service . ')');
+        if ($http_code !== 200) {
+            throw new Exception(self::ERROR_COMMUNICATION . ' (' . $this->taxify->getUrl() . $service . ')');
         }
 
         $array = json_decode($result, true);
 
         if (!array_key_exists('d', $array)) {
-            throw new Exception (self::ERROR_CALL);
+            throw new Exception(self::ERROR_CALL);
         }
 
         $array = $array['d'];

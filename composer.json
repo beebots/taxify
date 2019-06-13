@@ -1,21 +1,29 @@
 {
-  "name": "zaycon/taxify",
-  "description": "Connect your website with Taxify's API.",
-  "version": "1.0.2",
-  "homepage": "https://github.com/ZayconFoods/taxify",
+  "name": "rk/taxify",
+  "description": "Connect your website with Taxify's API. Originally zaycon/taxify.",
+  "version": "2.0.0",
+  "homepage": "https://github.com/rk/taxify",
   "license": "MIT",
-  "keywords": ["Taxify", "taxify"],
+  "keywords": [
+    "Taxify",
+    "taxify"
+  ],
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.1",
     "ext-json": "*",
     "ext-curl": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "4.8.*",
-    "php-coveralls/php-coveralls": "^2.1"
+    "phpunit/phpunit": "6.*"
   },
   "type": "library",
   "authors": [
+    {
+      "name": "Robert Kosek",
+      "email": "robert@woodst.com",
+      "homepage": "https://www.woodst.com/",
+      "role": "Senior Web Developer"
+    },
     {
       "name": "Tony DeStefano",
       "email": "tony@zayconfresh.com",
@@ -27,17 +35,11 @@
       "email": "ethan@zayconfresh.com",
       "homepage": "https://www.zayconfresh.com",
       "role": "Developer"
-    },
-    {
-      "name": "Robert Kosek",
-      "email": "robert@woodst.com",
-      "homepage": "https://www.woodst.com",
-      "role": "Developer"
     }
   ],
   "autoload": {
-    "psr-0": {
-      "ZayconTaxify\\": "src/"
+    "psr-4": {
+      "rk\\Taxify\\": "src/"
     }
   }
 }

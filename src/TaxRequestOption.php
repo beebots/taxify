@@ -6,7 +6,7 @@
  * Time: 11:45 AM
  */
 
-namespace ZayconTaxify;
+namespace rk\Taxify;
 
 class TaxRequestOption
 {
@@ -14,11 +14,7 @@ class TaxRequestOption
     private $key;
     private $value;
 
-    /**
-     * @param $key
-     * @param $value
-     */
-    function __construct($key, $value)
+    public function __construct(string $key, string $value)
     {
         $this->setKey($key);
         $this->setValue($value);
@@ -31,46 +27,30 @@ class TaxRequestOption
     {
         return [
             'TaxRequestOption' => [
-                'Key'   => Taxify::toString($this->key),
-                'Value' => Taxify::toString($this->value),
+                'Key'   => $this->key,
+                'Value' => $this->value,
             ],
         ];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param mixed $key
-     *
-     * @return TaxRequestOption
-     */
-    public function setKey($key)
+    public function setKey(string $key)
     {
         $this->key = $key;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return TaxRequestOption
-     */
-    public function setValue($value)
+    public function setValue(string $value)
     {
         $this->value = $value;
 

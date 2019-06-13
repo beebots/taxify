@@ -6,10 +6,12 @@
  * Time: 3:08 PM
  */
 
-namespace ZayconTaxify;
+namespace rk\Taxify;
 
-class TaxResponse extends TaxifyBaseClass
+class TaxResponse
 {
+
+    use HasExtendedProperties;
 
     private $document_key;
     private $sales_tax_amount;
@@ -30,15 +32,15 @@ class TaxResponse extends TaxifyBaseClass
     private $effective_tax_address;
 
     /** @var TaxJurisdiction[] $tax_jurisdictions */
-    private $tax_jurisdictions;
+    private $tax_jurisdictions = [];
 
     /** @var TaxLine[] $tax_lines */
-    private $lines;
+    private $lines = [];
 
     /**
-     * @param null $json
+     * @param string|null $json
      */
-    function __construct($json = null)
+    public function __construct(string $json = null)
     {
         if ($json !== null) {
             $this->loadFromJson($json);
@@ -48,7 +50,7 @@ class TaxResponse extends TaxifyBaseClass
     /**
      * @param $json
      */
-    public function loadFromJson($json)
+    public function loadFromJson(string $json)
     {
         $this->raw_json = $json;
         $this->loadFromArray(json_decode($json, true));
@@ -95,40 +97,24 @@ class TaxResponse extends TaxifyBaseClass
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDocumentKey()
+    public function getDocumentKey(): string
     {
         return $this->document_key;
     }
 
-    /**
-     * @param mixed $document_key
-     *
-     * @return TaxResponse
-     */
-    public function setDocumentKey($document_key)
+    public function setDocumentKey(string $document_key)
     {
         $this->document_key = $document_key;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSalesTaxAmount()
+    public function getSalesTaxAmount(): float
     {
         return $this->sales_tax_amount;
     }
 
-    /**
-     * @param mixed $sales_tax_amount
-     *
-     * @return TaxResponse
-     */
-    public function setSalesTaxAmount($sales_tax_amount)
+    public function setSalesTaxAmount(float $sales_tax_amount)
     {
         $this->sales_tax_amount = $sales_tax_amount;
 
@@ -136,19 +122,14 @@ class TaxResponse extends TaxifyBaseClass
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getTaxJurisdictionSummary()
+    public function getTaxJurisdictionSummary(): string
     {
         return $this->tax_jurisdiction_summary;
     }
 
-    /**
-     * @param mixed $tax_jurisdiction_summary
-     *
-     * @return TaxResponse
-     */
-    public function setTaxJurisdictionSummary($tax_jurisdiction_summary)
+    public function setTaxJurisdictionSummary(string $tax_jurisdiction_summary)
     {
         $this->tax_jurisdiction_summary = $tax_jurisdiction_summary;
 
@@ -196,21 +177,21 @@ class TaxResponse extends TaxifyBaseClass
     }
 
     /**
-     * @return boolean
+     * @deprecated
      */
-    public function isIsCommitted()
+    public function isIsCommitted(): bool
     {
         return $this->is_committed;
     }
 
-    /**
-     * @param boolean $is_committed
-     *
-     * @return TaxResponse
-     */
-    public function setIsCommitted($is_committed)
+    public function isCommitted(): bool
     {
-        $this->is_committed = ($is_committed === true) ? true : false;
+        return $this->is_committed;
+    }
+
+    public function setIsCommitted(bool $is_committed)
+    {
+        $this->is_committed = $is_committed;
 
         return $this;
     }

@@ -6,16 +6,18 @@
  * Time: 7:20 AM
  */
 
-namespace ZayconTaxify;
+namespace rk\Taxify;
 
-class TaxLine extends TaxifyBaseClass
+class TaxLine
 {
+
+    use HasTaxRequestOptions, HasExtendedProperties;
 
     private $line_number;
     private $item_key;
     private $actual_extended_price;
     private $tax_included_in_price = false;
-    private $quantity;
+    private $quantity = 1;
     private $item_description;
     private $item_taxability_code;
     private $item_categories;
@@ -25,23 +27,22 @@ class TaxLine extends TaxifyBaseClass
     private $tax_rate;
     private $sales_tax_amount;
 
-    /** @var TaxRequestOption[] $tax_request_options */
-    private $tax_request_options;
-
     /**
      * @param array|NULL $data
      */
-    function __construct(array $data = null)
+    public function __construct(array $data = null)
     {
-        $this
-            ->setLineNumber($data['LineNumber'])
-            ->setItemKey($data['ItemKey'])
-            ->setItemTaxabilityCode($data['ItemTaxabilityCode'])
-            ->setAmount($data['Amount'])
-            ->setExemptAmount($data['ExemptAmount'])
-            ->setTaxRate($data['TaxRate'])
-            ->setSalesTaxAmount($data['SalesTaxAmount'])
-            ->setExtendedProperties($data['ExtendedProperties']);
+        if ($data !== null) {
+            $this
+                ->setLineNumber($data['LineNumber'])
+                ->setItemKey($data['ItemKey'])
+                ->setItemTaxabilityCode($data['ItemTaxabilityCode'])
+                ->setAmount($data['Amount'])
+                ->setExemptAmount($data['ExemptAmount'])
+                ->setTaxRate($data['TaxRate'])
+                ->setSalesTaxAmount($data['SalesTaxAmount'])
+                ->setExtendedProperties($data['ExtendedProperties']);
+        }
     }
 
     /**
@@ -50,15 +51,15 @@ class TaxLine extends TaxifyBaseClass
     public function toArray()
     {
         $data = [
-            'LineNumber'          => Taxify::toString($this->line_number),
-            'ItemKey'             => Taxify::toString($this->item_key),
-            'ActualExtendedPrice' => (empty($this->actual_extended_price) ? 0 : $this->actual_extended_price),
+            'LineNumber'          => (string)$this->line_number,
+            'ItemKey'             => (string)$this->item_key,
+            'ActualExtendedPrice' => $this->actual_extended_price ?? 0,
             'TaxIncludedInPrice'  => $this->tax_included_in_price,
-            'Quantity'            => (empty($this->quantity) ? 0 : $this->quantity),
-            'ItemDescription'     => Taxify::toString($this->item_description),
-            'ItemTaxabilityCode'  => Taxify::toString($this->item_taxability_code),
-            'ItemCategories'      => Taxify::toString($this->item_categories),
-            'ItemTags'            => Taxify::toString($this->item_tags),
+            'Quantity'            => $this->quantity,
+            'ItemDescription'     => (string)$this->item_description,
+            'ItemTaxabilityCode'  => (string)$this->item_taxability_code,
+            'ItemCategories'      => (string)$this->item_categories,
+            'ItemTags'            => (string)$this->item_tags,
             'Options'             => [],
         ];
 
@@ -91,84 +92,50 @@ class TaxLine extends TaxifyBaseClass
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getItemKey()
+    public function getItemKey(): ?string
     {
         return $this->item_key;
     }
 
-    /**
-     * @param $item_key
-     *
-     * @return $this
-     */
-    public function setItemKey($item_key)
+    public function setItemKey(string $item_key)
     {
         $this->item_key = $item_key;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getActualExtendedPrice()
+    public function getActualExtendedPrice(): ?int
     {
         return $this->actual_extended_price;
     }
 
-    /**
-     * @param $actual_extended_price
-     *
-     * @return $this
-     */
-    public function setActualExtendedPrice($actual_extended_price)
+    public function setActualExtendedPrice(int $actual_extended_price)
     {
-        $actual_extended_price       = preg_replace('/[^0-9.-]*/', '', $actual_extended_price);
-        $this->actual_extended_price = (is_numeric($actual_extended_price)) ? $actual_extended_price : 0;
+        $this->actual_extended_price = $actual_extended_price;
 
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isTaxIncludedInPrice()
+    public function isTaxIncludedInPrice(): bool
     {
         return $this->tax_included_in_price;
     }
 
-    /**
-     * @param $tax_included_in_price
-     *
-     * @return $this
-     */
-    public function setTaxIncludedInPrice($tax_included_in_price)
+    public function setTaxIncludedInPrice(bool $tax_included_in_price)
     {
-        $this->tax_included_in_price = ($tax_included_in_price === true) ? true : false;
+        $this->tax_included_in_price = $tax_included_in_price;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    /**
-     * @param $quantity
-     *
-     * @return $this
-     */
-    public function setQuantity($quantity)
+    public function setQuantity(int $quantity)
     {
-        $quantity       = preg_replace('/[^0-9.-]*/', '', $quantity);
-        $this->quantity = (strlen($quantity) == 0) ? 0 : $quantity;
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -253,20 +220,12 @@ class TaxLine extends TaxifyBaseClass
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAmount()
+    public function getAmount(): int
     {
         return $this->amount;
     }
 
-    /**
-     * @param mixed $amount
-     *
-     * @return TaxLine
-     */
-    public function setAmount($amount)
+    public function setAmount(int $amount)
     {
         $this->amount = $amount;
 
@@ -333,53 +292,4 @@ class TaxLine extends TaxifyBaseClass
         return $this;
     }
 
-    /**
-     * @return TaxRequestOption[]
-     */
-    public function getTaxRequestOptions()
-    {
-        return $this->tax_request_options;
-    }
-
-    /**
-     * @param array $tax_request_options
-     *
-     * @return $this
-     */
-    public function setTaxRequestOptions(array $tax_request_options)
-    {
-        $this->tax_request_options = [];
-        foreach ($tax_request_options as $key => $value) {
-            $tax_request_option          = new TaxRequestOption($key, $value);
-            $this->tax_request_options[] = $tax_request_option;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param TaxRequestOption $tax_request_option
-     */
-    public function addTaxRequestOption(TaxRequestOption $tax_request_option)
-    {
-        $this->tax_request_options[] = $tax_request_option;
-    }
-
-    /**
-     * @param $index
-     */
-    public function removeTaxRequestOption($index)
-    {
-        if (array_key_exists($index, $this->tax_request_options)) {
-            unset($this->tax_request_options[$index]);
-        }
-    }
-
-    /**
-     *
-     */
-    public function removeAllTaxRequestOptions()
-    {
-        $this->tax_request_options = null;
-    }
 }

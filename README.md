@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/ZayconFoods/taxify.svg?branch=master)](https://travis-ci.org/ZayconFoods/taxify)
 [![Coverage Status](https://coveralls.io/repos/ZayconFoods/taxify/badge.svg?branch=master&service=github)](https://coveralls.io/github/ZayconFoods/taxify?branch=master)
 
-Connect your website with the [Taxify](https://www.taxify.co) API
+Connect your website with the [Taxify] API
 
 ## Table of Contents
 
@@ -14,98 +14,76 @@ Connect your website with the [Taxify](https://www.taxify.co) API
 * [Documentation](#documentation)
 * [About](#about)
 
-## <a name="notes"></a> Notes
+## <a name="notes"></a> Fork Notes
 
-This fork of Taxify has been updated to work with PHP 7, fixing notices, etc. It
-is currently an equivalent replacement for the original package.
+It looked like the original [ZayconTaxify] library was abandoned a few years ago
+at the time of writing this. We needed to support [Taxify] in a project, and it
+has been an adventure. The biggest challenge has been adequate documentation
+for the Taxify API itself.
 
-If breaking changes are introduced, they will be introduced in a v2 release.
+This fork/alternative is derived from the original source of [ZayconTaxify] and
+differs enough to be its own implementation now. I've bumped the version to 2.0
+to prevent any accidental installs of this package.
+
+Major changes:
+
+  * Support PHP >= 7.1.
+  
+  * Support PSR-4 autoloading.
+  
+  * Upgrade PHPUnit to v6 for development
+  
+  * Decoupled the common "request" object into individual requests:
+  
+    - `VerifyAddress`
+    - `CalculateTax`
+    - `CommitTaxRequest`
+    - `CancelTaxRequest`
+    - `GetCodesRequest`
+  
+  * Decoupled the common "response" object into individual responses:
+  
+    - `VerifyAddressResponse`
+    - `CalculateTax`
+    - `CommitTaxResponse`
+    - `CancelTaxResponse`
+    - `GetCodesResponse`
+
+  * Refactored to make better use of traits and type hinting
 
 ## <a name="install"></a>Installation
 
-Add ZayconTaxify to your `composer.json` file. If you are not using [Composer](http://getcomposer.org), you should be. It's an excellent way to manage dependencies in your PHP application.
+Add `rk/taxify` to your `composer.json` file. (We're not currently published to
+packagist.)
 
 ```json
 {
   "require": {
-    "zaycon/taxify": "1.0.*"
-  }
+    "rk/taxify": "~2.0"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/rk/taxify"
+    }
+  ]
 }
 ```
 
 ## <a name="documentation"></a>Documentation
 
-### Initialize Your Object
+**OUTDATED**
 
-```php
-$taxify = new ZayconTaxify\Taxify( '[YOUR_API_KEY]', ZayconTaxify\Taxify::ENV_DEV, TRUE );
-```
-
-### Calculate Tax
-```php
-$origin_address = new ZayconTaxify\Address();
-$origin_address
-    ->setStreet1( '16201 E Indiana Ave' )
-    ->setCity( 'Spokane Valley' )
-    ->setState( 'WA' )
-    ->setPostalCode( '99216' );
-
-$destination_address = new ZayconTaxify\Address();
-$destination_address
-    ->setStreet1( '16201 E Indiana Ave' )
-    ->setCity( 'Spokane Valley' )
-    ->setState( 'WA' )
-    ->setPostalCode( '99216' );
-
-$line = new ZayconTaxify\TaxLine();
-$line
-    ->setQuantity( 1 )
-    ->setItemKey( 'SKU001' )
-    ->setActualExtendedPrice( 100 )
-    ->setItemDescription( 'Some Product' )
-    ->setItemTaxabilityCode( ZayconTaxify\Code::CODE_FOOD );
-
-$tax = new ZayconTaxify\Tax( $taxify );
-$tax
-    ->setDocumentKey( 'Order001' )
-    ->setTaxDate( time() )
-    ->setIsCommitted( TRUE )
-    ->setOriginAddress( $origin_address )
-    ->setDestinationAddress( $destination_address )
-    ->addLine( $line );
-$tax_response = $tax->calculateTax();
-```
-
-### Commit Tax
-```php
-$tax = new ZayconTaxify\Tax( $taxify );
-$tax->setDocumentKey( 'Order001' );
-$tax_response = $tax->commitTax();
-```
-
-### Cancel Tax
-```php
-$tax = new ZayconTaxify\Tax( $taxify );
-$tax->setDocumentKey( 'Order001' );
-$tax_response = $tax->cancelTax();
-```
-
-### Verify Address
-```php
-$address = new ZayconTaxify\Address( $taxify );
-$address
-	->setStreet1( '16201 E Indiana Ave' )
-	->setCity( 'Spokane Valley' )
-	->setState( 'WA' )
-	->setPostalCode( '99216' )
-	->verifyAddress();
-```
-
-### Get Codes
-```php
-$account = new ZayconTaxify\Account( $taxify );
-$code_types = $account->getCodes();
-```
+Please see tests for the most up-to-date usage. 
 
 ## <a name="about"></a>About
-Developed by [Zaycon Fresh](https://www.zayconfresh.com)
+
+Originally developed by [Zaycon Fresh].
+
+This version revised, refactored, and updated for PHP 7 by Robert Kosek. 
+Development time and effort is a courtesy of [Wood Street].
+
+  [Wood Street]: https://www.woodst.com/ 
+  [ZayconTaxify]: https://packagist.org/packages/zaycon/taxify
+  [Zaycon Fresh]: https://www.zayconfresh.com/
+  [Taxify]: https://www.taxify.co/

@@ -6,10 +6,12 @@
  * Time: 3:10 PM
  */
 
-namespace ZayconTaxify;
+namespace rk\Taxify;
 
-class TaxJurisdiction extends TaxifyBaseClass
+class TaxJurisdiction
 {
+
+    use HasExtendedProperties;
 
     private $applied_to;
     private $jurisdiction_type;
@@ -20,7 +22,7 @@ class TaxJurisdiction extends TaxifyBaseClass
     /**
      * @param array|NULL $data
      */
-    function __construct(array $data = null)
+    public function __construct(array $data = null)
     {
         if (!empty($data)) {
             $this->loadFromArray($data);
