@@ -1,22 +1,23 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Tony DeStefano
- * Date: 10/22/15
- * Time: 2:13 PM
+ * Copyright © 2019 by Wood Street, Inc. All Rights reserved.
  */
 
-require_once('config.php');
+require_once 'config.php';
+
+use rk\Taxify\Communicator;
+use rk\Taxify\Requests\GetCodes;
+use rk\Taxify\Taxify;
+
+$request = new GetCodes();
 
 try {
     /* initialize taxify */
-    $taxify = new ZayconTaxify\Taxify(API_KEY, ZayconTaxify\Taxify::ENV_DEV, true);
+    $taxify = new Taxify(API_KEY, Taxify::ENV_PROD, true);
+    $comm   = new Communicator($taxify);
+    $result = $request->execute($comm);
 
-    /* account */
-    $account = new ZayconTaxify\Account($taxify);
-
-    $code_types = $account->getCodes();
-    var_dump($code_types);
-} catch (ZayconTaxify\Exception $e) {
+    var_dump($result);
+} catch (Exception $e) {
     var_dump($e);
 }

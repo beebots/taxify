@@ -42,12 +42,4 @@ abstract class StringEntity
         return $this->value;
     }
 
-    public function __debugInfo()
-    {
-        return [
-            'class'  => get_class($this),
-            'string' => $this->value,
-        ];
-    }
-
 }
