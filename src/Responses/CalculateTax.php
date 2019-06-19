@@ -70,18 +70,18 @@ class CalculateTax implements ResponseInterface
         $this->effective_tax_address = new Address();
         $this->effective_tax_address->loadFromArray($array['EffectiveTaxAddress']);
 
-        if (!empty($data['TaxJurisdictionDetails'])) {
+        if (!empty($array['TaxJurisdictionDetails'])) {
             $this->tax_jurisdictions = [];
 
-            foreach ($data['TaxJurisdictionDetails'] as $detail) {
+            foreach ($array['TaxJurisdictionDetails'] as $detail) {
                 $this->tax_jurisdictions[] = new TaxJurisdiction($detail);
             }
         }
 
-        if (!empty($data['TaxLineDetails'])) {
+        if (!empty($array['TaxLineDetails'])) {
             $this->lines = [];
 
-            foreach ($data['TaxLineDetails'] as $detail) {
+            foreach ($array['TaxLineDetails'] as $detail) {
                 $this->lines[] = new TaxLine($detail);
             }
         }
