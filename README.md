@@ -1,9 +1,4 @@
-# ZayconTaxify
-
-[![Latest Stable Version](https://poser.pugx.org/zaycon/taxify/v/stable)](https://packagist.org/packages/zaycon/taxify)
-[![Total Downloads](https://poser.pugx.org/zaycon/taxify/downloads)](https://packagist.org/packages/zaycon/taxify)
-[![Build Status](https://travis-ci.org/ZayconFoods/taxify.svg?branch=master)](https://travis-ci.org/ZayconFoods/taxify)
-[![Coverage Status](https://coveralls.io/repos/ZayconFoods/taxify/badge.svg?branch=master&service=github)](https://coveralls.io/github/ZayconFoods/taxify?branch=master)
+# rk/Taxify
 
 Connect your website with the [Taxify] API
 
@@ -18,8 +13,9 @@ Connect your website with the [Taxify] API
 
 It looked like the original [ZayconTaxify] library was abandoned a few years ago
 at the time of writing this. We needed to support [Taxify] in a project, and it
-has been an adventure. The biggest challenge has been adequate documentation
-for the Taxify API itself.
+has been an adventure. The biggest challenge has been finding adequate 
+[documentation](https://github.com/TaxifyAPI/TaxifyAPI) for the Taxify API 
+itself.
 
 This fork/alternative is derived from the original source of [ZayconTaxify] and
 differs enough to be its own implementation now. I've bumped the version to 2.0
@@ -63,8 +59,8 @@ packagist.)
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://github.com/rk/taxify"
+      "type": "git",
+      "url": "https://github.com/rk/taxify.git"
     }
   ]
 }
