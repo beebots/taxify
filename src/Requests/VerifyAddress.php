@@ -20,7 +20,7 @@ class VerifyAddress implements RequestInterface
 
     /** @var string */
     protected $street1;
-    /** @var string */
+    /** @var string|null */
     protected $street2;
     /** @var string */
     protected $city;
@@ -98,12 +98,12 @@ class VerifyAddress implements RequestInterface
         return $this;
     }
 
-    public function getStreet2(): string
+    public function getStreet2(): ?string
     {
         return $this->street2;
     }
 
-    public function setStreet2(string $street2): self
+    public function setStreet2(string $street2 = null): self
     {
         $this->street2 = $street2;
 
