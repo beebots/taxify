@@ -15,33 +15,33 @@ use rk\Taxify\Code;
 /* addresses */
 $origin_address = new Address();
 $origin_address
-    ->setStreet1('16201 E Indiana Ave')
-    ->setCity('Spokane Valley')
-    ->setState('WA')
-    ->setPostalCode('99216');
+    ->setStreet1('303 E Patrick St')
+    ->setCity('Frederick')
+    ->setRegion('MD')
+    ->setPostalCode(21701);
 
 $destination_address = new Address();
 $destination_address
-    ->setStreet1('16201 E Indiana Ave')
-    ->setCity('Spokane Valley')
-    ->setState('WA')
-    ->setPostalCode('99216');
+    ->setStreet1('303 E Patrick St')
+    ->setCity('Frederick')
+    ->setRegion('MD')
+    ->setPostalCode(21701);
 
 /* line item */
 $line = new TaxLine();
 $line
-    ->setQuantity(1)
     ->setItemKey('SKU001')
-    ->setActualExtendedPrice(100)
-    ->setItemDescription('Some Product')
-    ->setItemTaxabilityCode(Code::CODE_FOOD);
+    ->setQuantity(3)
+    ->setAmount(9.99)
+    // ->setActualExtendedPrice(9.99)
+    ->setItemDescription('Some Product');
 
 /* calculate request */
 $request = new CalculateTax();
 $request
     ->setDocumentKey('Order001')
     ->setTaxDate(time())
-    ->setCommitted(true)
+    ->setCommitted(false)
     ->setOriginAddress($origin_address)
     ->setDestinationAddress($destination_address)
     ->addLine($line);
@@ -52,7 +52,7 @@ try {
     $comm   = new Communicator($taxify);
     $result = $request->execute($comm);
 
-    var_dump($result);
+    print_r($result);
 } catch (Exception $e) {
-    var_dump($e);
+    print_r($e);
 }

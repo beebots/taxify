@@ -73,7 +73,7 @@ class Discount
 
     public function getAmount(): float
     {
-        return $this->amount;
+        return $this->amount ?? 0.0;
     }
 
     public function setAmount(float $amount)

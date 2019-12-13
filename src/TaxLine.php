@@ -53,7 +53,7 @@ class TaxLine
         $data = [
             'LineNumber'          => (string)$this->line_number,
             'ItemKey'             => (string)$this->item_key,
-            'ActualExtendedPrice' => $this->actual_extended_price ?? 0,
+            'ActualExtendedPrice' => $this->actual_extended_price ?? $this->amount * $this->quantity,
             'TaxIncludedInPrice'  => $this->tax_included_in_price,
             'Quantity'            => $this->quantity,
             'ItemDescription'     => (string)$this->item_description,
@@ -104,14 +104,21 @@ class TaxLine
         return $this;
     }
 
-    public function getActualExtendedPrice(): ?int
+    public function getActualExtendedPrice(): ?float
     {
         return $this->actual_extended_price;
     }
 
-    public function setActualExtendedPrice(int $actual_extended_price)
+    /**
+     * The total price of the line item (quantity * unit_price); calculated
+     * if not provided.
+     *
+     * @param float $price
+     * @return $this
+     */
+    public function setActualExtendedPrice(float $price)
     {
-        $this->actual_extended_price = $actual_extended_price;
+        $this->actual_extended_price = $price;
 
         return $this;
     }
@@ -128,6 +135,9 @@ class TaxLine
         return $this;
     }
 
+    /**
+     * @return int The number of items in the line item
+     */
     public function getQuantity(): int
     {
         return $this->quantity;
@@ -220,72 +230,52 @@ class TaxLine
         return $this;
     }
 
-    public function getAmount(): int
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(int $amount)
+    /**
+     * @param float|null $amount The unit_price of the line-item.
+     * @return $this
+     */
+    public function setAmount(float $amount = null)
     {
         $this->amount = $amount;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSalesTaxAmount()
+    public function getSalesTaxAmount(): ?float
     {
         return $this->sales_tax_amount;
     }
 
-    /**
-     * @param mixed $sales_tax_amount
-     *
-     * @return TaxLine
-     */
-    public function setSalesTaxAmount($sales_tax_amount)
+    public function setSalesTaxAmount(float $amount = null)
     {
-        $this->sales_tax_amount = $sales_tax_amount;
+        $this->sales_tax_amount = $amount;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getExemptAmount()
+    public function getExemptAmount(): ?float
     {
         return $this->exempt_amount;
     }
 
-    /**
-     * @param mixed $exempt_amount
-     *
-     * @return TaxLine
-     */
-    public function setExemptAmount($exempt_amount)
+    public function setExemptAmount(float $exempt_amount = null)
     {
         $this->exempt_amount = $exempt_amount;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTaxRate()
+    public function getTaxRate(): ?float
     {
         return $this->tax_rate;
     }
 
-    /**
-     * @param mixed $tax_rate
-     *
-     * @return TaxLine
-     */
-    public function setTaxRate($tax_rate)
+    public function setTaxRate(float $tax_rate = null)
     {
         $this->tax_rate = $tax_rate;
 
