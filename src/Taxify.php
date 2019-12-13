@@ -101,9 +101,15 @@ class Taxify
     public function printDebugInfo(string $title, $data): bool
     {
         if ($this->debug_mode) {
-            echo '<h2>&lt;' . $title . '&gt;</h2>' . "\r\n";
-            var_dump($data);
-            echo '<h2>&lt;/' . $title . '&gt;</h2>' . "\r\n";
+            echo $title, PHP_EOL, str_repeat('=', strlen($title)), PHP_EOL, PHP_EOL;
+
+            if (is_string($data)) {
+                echo $data, PHP_EOL;
+            } else {
+                var_export($data);
+            }
+
+            echo PHP_EOL;
 
             return true;
         }
