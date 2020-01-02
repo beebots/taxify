@@ -63,6 +63,9 @@ class TaxLine
             'Options'             => [],
         ];
 
+        // WARN: possible breaking change with string formatting/rounding
+        $data['ActualExtendedPrice'] = sprintf('%0.2f', round($data['ActualExtendedPrice'], 2, PHP_ROUND_HALF_UP));
+
         if ($this->tax_request_options) {
             foreach ($this->tax_request_options as $tax_request_option) {
                 $data['Request']['Options'][] = $tax_request_option->toArray();

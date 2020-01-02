@@ -38,7 +38,8 @@ class Discount
             'Discount' => [
                 'Order'        => $this->order,
                 'Code'         => $this->code,
-                'Amount'       => $this->amount,
+                // WARN: possible breaking change with string formatting/rounding
+                'Amount'       => sprintf('%0.2f', round($this->amount, 2, PHP_ROUND_HALF_UP)),
                 'DiscountType' => $this->discount_type,
             ],
         ];
